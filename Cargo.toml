@@ -1,0 +1,15 @@
+[package]
+name = "ba-comm-cli"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+ba-postcard-proto = { path = "../ba-postcard-proto" }
+serialport = "4"
+clap = "2"
+postcard = { version = "0.7", features = ["use-std"] }
+anyhow = "1"
+chrono = "0.4"
