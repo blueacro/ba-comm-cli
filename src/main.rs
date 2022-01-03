@@ -59,11 +59,11 @@ fn main() {
         )
         .get_matches();
 
-    let port = matches.value_of("PORT").unwrap_or("/dev/ttyACM1");
+    let port = matches.value_of("port").unwrap_or("/dev/ttyACM1");
     let port = serialport::new(port, 9600)
         .timeout(Duration::from_secs(1))
         .open()
-        .expect("failed to open port");
+        .expect(format!("failed to open port {}", port).as_str());
 
     let mut device = Device::new(port);
 
@@ -74,10 +74,12 @@ fn main() {
     } else if let Some(_) = matches.subcommand_matches("set_time") {
         let now = chrono::Local::now();
         let message = proto::Command::SetTime(proto::SetTime {
-            minutes: now.time().minute() as u8,
+            minutes: now.time().minute()  as u8,
             hours: now.time().hour() as u8,
             seconds: now.time().second() as u8,
         });
+        
+
         println!("{:?}", device.command_response(&message));
     }
 }
